@@ -86,6 +86,8 @@ Now we set the clock frequency to 144 MHz. In this case, the output pulse freque
 
 The frequency of 10.3 MHz is the highest frequency that the output remains stable for at least 30 minutes.
 
+## Solution 2
+
 Now we set the clock frequency to 160 MHz. In this case, the output pulse frequency on PC14 reaches about 11.5 MHz, but after about 20 seconds, it becomes unstable and the output is cut off.
 
 ![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/4c23c660-227e-40a5-a059-5ee8ab06594d)
