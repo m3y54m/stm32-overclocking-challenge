@@ -6,6 +6,8 @@ This repository contains my solutions to [a challenge on Sisoog website](https:/
 
 **Write a program for the STM32F103C8T6 microcontroller to toggle the PC14 pin at the highest possible frequency.**
 
+![2023-09-27-12_18_45-STM32CubeMX-Untitled__-STM32F103C8Tx-768x628](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/164b9463-871c-4aa6-9023-f01f0d98a446)
+
 The program should meet the following criteria:
 
 - The program that achieves the highest frequency on PC14 will be considered the winner.
