@@ -117,3 +117,40 @@ External crystal = 8 MHz, system clock = 128 MHz, output frequency on PC14 = 10.
 External crystal = 16 MHz, system clock = 160 MHz, output frequency on PC14 = 13.33 MHz Unstable (lasts only about 20 seconds):
 
 ![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/6384566f-a16d-43df-b01d-5dd7a625acd3)
+
+## Solution 3
+
+To increase the pulse frequency, before entering the while loop, the corresponding values of GPIOC_ODR for setting the PC14 pin to zero and one were stored in two genral-purpose registers r1 and r2:
+
+```c
+asm volatile(
+  "ldr r0, =0x4001100C\n" // Load GPIOC_ODR address into register r0
+  "ldr r1, =0x00000000\n" // Move the value for PC14 = 0 into register r1
+  "ldr r2, =0x00004000\n" // Move the value for PC14 = 1 into register r2
+);
+```
+
+Inside the while loop, we use two `STR` commands to set PC14 to zero and one.
+
+```c
+asm volatile(
+  "str r2, [r0]\n" // Store value of r1 (PC14 = 0) to the address of GPIOC_ODR
+  "str r1, [r0]\n" // Store value of r2 (PC14 = 1) to the address of GPIOC_ODR
+);
+```
+
+Now, with an external crystal of 16 MHz and setting the clock to 144 MHz, a frequency of 20.66 MHz can be reached on PC14:
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/7472b35f-3f81-4bf9-8d92-e28eec869349)
+
+The branch instruction `b` executed at the end of each while loop, reduces the frequency of output pulse on PC14;
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/4bdf354d-4d27-4ff4-b20d-91210b51f5e8)
+
+To solve this problem, we toggle PC14 multiple times and sequentially in each execution of the loop:
+
+![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/a43d2e2e-fb9f-4e71-b1c0-dcd5944fdd60)
+
+**By removing the delay caused by the branch, we were able to reach a frequency of 36.23 MHz on PC14 with an external crystal of 16 MHz and setting the clock to 144 MHz:**
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/d7bea841-1a9d-40dc-a2cc-a9fab940eaa7)
