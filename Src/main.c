@@ -99,12 +99,30 @@ inline void toggle_v3(void)
       "str r1, [r0]\n" // Store value of r2 (PC14 = 1) to the address of GPIOC_ODR
   );
 }
+
+inline void toggle_v4(void)
+{
+  // Toggle PC14 using EVENTOUT function
+  asm volatile(
+      "sev\n" // Set EVENTOUT pin (PC14) for one clock (and then reset it) => PC14 = 1
+      "nop\n" // Wait for one clock cycle and do nothing (while EVENTOUT is reset) => PC14 = 0
+      "sev\n"
+      "nop\n"
+      "sev\n"
+      "nop\n"
+      "sev\n"
+      "nop\n"
+      "sev\n"
+      "nop\n"
+      "sev\n"
+      "nop\n");
+}
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -171,700 +189,149 @@ int main(void)
   // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 36.2 MHz (stable) => MAXIMUM STABLE FREQUENCY
   // - RCC_PLL_MUL10 => f_HCLK = 160 MHz => f_PC14 = 40 MHz (unstable: stops in less than 1 second after startup)
 
-  init_v3();
+  // Frequency of the square wave generated on PC14 using multiple consecutive toggle_v3()'s:
+  // With HSE = 8MHz :
+  // - RCC_PLL_MUL16 => f_HCLK = 128 MHz => f_PC14 = 64.10 MHz (stable)
+  // With HSE = 16MHz :
+  // - RCC_PLL_MUL8 => f_HCLK = 144 MHz => f_PC14 = 64.10 MHz (stable)
+  // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 72.46 MHz (stable) => MAXIMUM STABLE FREQUENCY
 
   while (1)
   {
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
-    toggle_v3();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
+    toggle_v4();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -873,32 +340,33 @@ int main(void)
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
-   * in the RCC_OscInitTypeDef structure.
-   */
+  * in the RCC_OscInitTypeDef structure.
+  */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -911,10 +379,10 @@ void SystemClock_Config(void)
 }
 
 /**
- * @brief GPIO Initialization Function
- * @param None
- * @retval None
- */
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -924,15 +392,18 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-
   /*Configure GPIO pin : PC14 */
   GPIO_InitStruct.Pin = GPIO_PIN_14;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configures the port and pin on which the EVENTOUT Cortex signal will be connected */
+  HAL_GPIOEx_ConfigEventout(AFIO_EVENTOUT_PORT_C, AFIO_EVENTOUT_PIN_14);
+
+  /*Enables the Event Output */
+  HAL_GPIOEx_EnableEventout();
+
 }
 
 /* USER CODE BEGIN 4 */
@@ -940,9 +411,9 @@ static void MX_GPIO_Init(void)
 /* USER CODE END 4 */
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -954,14 +425,14 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
