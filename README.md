@@ -154,3 +154,30 @@ To solve this problem, we toggle PC14 multiple times and sequentially in each ex
 **By removing the delay caused by the branch, we were able to reach a frequency of 36.23 MHz on PC14 with an external crystal of 16 MHz and setting the clock to 144 MHz:**
 
 ![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/d7bea841-1a9d-40dc-a2cc-a9fab940eaa7)
+
+## Solution 4
+
+The EVENTOUT function on PC14 pin can be used to achieve higher frequency. After enabling the EVENTOUT function, the value of PC14 can be set to `1` only for one clock cycle using the `SEV` instruction. In this way, half of a full pulse is created. Now, with the help of the `NOP` instruction, we create a delay for one clock cycle in the state where the value of PC14 is `0`, so that a complete pulse is created.
+
+![Screenshot_10](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/35acc2ad-6d8f-4805-8509-ccb1999204ec)
+
+```c
+asm volatile(
+  "sev\n" // Set EVENTOUT pin (PC14) for one clock (and then reset it) => PC14 =1
+  "nop\n" // Wait for one clock cycle and do nothing (while EVENTOUT is reset) => PC14 = 0
+);
+```
+
+Similar to solution 3, it is possible to eliminate the delay caused by branch instruction `b` in the generated signal by sequentially executing `SEV` and `NOP` inside the while loop. The results of this program are as follows:
+
+External crystal = 8 MHz, system clock 128 MHz, output signal frequency = 64.10 MHz:
+
+![128MHz_v4_8M](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/a064a292-957b-4ec5-9bb9-a1f6d6c7f3df)
+
+External crystal = 16 MHz, system clock 128 MHz, output signal frequency = 64.10 MHz:
+
+![128MHz_v4_16M](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/352d359a-ea74-4bd3-ac1b-2fcbf6f8c437)
+
+**External crystal = 16 MHz, system clock 144 MHz, output signal frequency = 72.46 MHz (highest stable frequency):**
+
+![144MHz_v4_16M](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/ce426b2e-4062-42c0-b00f-563a52a3fde5)
