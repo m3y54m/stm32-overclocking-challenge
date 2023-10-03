@@ -53,13 +53,13 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-inline void pc14_init(void)
+inline void init_v1_v2(void)
 {
   // Load required values in registers using assembly instructions
   asm volatile(
       "ldr r0, =0x4001100C\n" // Load GPIOC_ODR address into register r0
       "ldr r1, [r0]\n"        // Load value in the GPIOC_ODR address into register r1
-      "mov r2, #0x00004000\n" // Move the value of bit mask for PC14 into register r2
+      "ldr r2, =0x00004000\n" // Move the value of bit mask for PC14 into register r2
   );
 }
 
@@ -78,6 +78,25 @@ inline void toggle_v2(void)
   asm volatile(
       "eors r1, r2\n"  // XOR the last value of GPIOC_ODR (r1) with the mask (r2)
       "str r1, [r0]\n" // Store the new value (r1) back to the address of GPIOC_ODR
+  );
+}
+
+inline void init_v3(void)
+{
+  // Load required values in registers using assembly instructions
+  asm volatile(
+      "ldr r0, =0x4001100C\n" // Load GPIOC_ODR address into register r0
+      "ldr r1, =0x00000000\n" // Move the value for PC14 = 0 into register r1
+      "ldr r2, =0x00004000\n" // Move the value for PC14 = 1 into register r2
+  );
+}
+
+inline void toggle_v3(void)
+{
+  // Toggle PC14 using assembly instructions
+  asm volatile(
+      "str r2, [r0]\n" // Store value of r1 (PC14 = 0) to the address of GPIOC_ODR
+      "str r1, [r0]\n" // Store value of r2 (PC14 = 1) to the address of GPIOC_ODR
   );
 }
 /* USER CODE END 0 */
@@ -117,33 +136,735 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  pc14_init();
+  // Frequency of the square wave generated on PC14 using toggle_v1():
+  // With HSE = 8MHz :
+  // - RCC_PLL_MUL9 => f_HCLK = 72 MHz => f_PC14 = 5.15 MHz (stable)
+  // - RCC_PLL_MUL10 => f_HCLK = 80 MHz => f_PC14 = 5.75 MHz (stable)
+  // - RCC_PLL_MUL11 => f_HCLK = 88 MHz => f_PC14 = 6.25 MHz (stable)
+  // - RCC_PLL_MUL12 => f_HCLK = 96 MHz => f_PC14 = 6.85 MHz (stable)
+  // - RCC_PLL_MUL13 => f_HCLK = 104 MHz => f_PC14 = 7.4 MHz (stable)
+  // - RCC_PLL_MUL14 => f_HCLK = 112 MHz => f_PC14 = 8.0 MHz (stable)
+  // - RCC_PLL_MUL15 => f_HCLK = 120 MHz => f_PC14 = 8.5 MHz (stable)
+  // - RCC_PLL_MUL16 => f_HCLK = 128 MHz => f_PC14 = 9.1 MHz (stable)
+  // With HSE = 16MHz :
+  // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 10.3 MHz (stable) => MAXIMUM STABLE FREQUENCY
+  // - RCC_PLL_MUL10 => f_HCLK = 160 MHz => f_PC14 = 11.5 MHz (unstable: stops about 20 seconds after startup)
+
+  // Frequency of the square wave generated on PC14 using toggle_v2():
+  // With HSE = 8MHz :
+  // - RCC_PLL_MUL16 => f_HCLK = 128 MHz => f_PC14 = 10.6 MHz (stable)
+  // With HSE = 16MHz :
+  // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 12.0 MHz (stable) => MAXIMUM STABLE FREQUENCY
+  // - RCC_PLL_MUL10 => f_HCLK = 160 MHz => f_PC14 = 13.3 MHz (unstable: stops about 20 seconds after startup)
+
+  // Frequency of the square wave generated on PC14 using a single toggle_v3():
+  // With HSE = 8MHz :
+  // - RCC_PLL_MUL16 => f_HCLK = 128 MHz => f_PC14 = not tested but expected to be about 18 MHz
+  // With HSE = 16MHz :
+  // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 20.5 MHz (stable) => MAXIMUM STABLE FREQUENCY
+  // - RCC_PLL_MUL10 => f_HCLK = 160 MHz => f_PC14 = 22.9 MHz (unstable: stops about 20 seconds after startup)
+
+  // Frequency of the square wave generated on PC14 using multiple consecutive toggle_v3()'s:
+  // With HSE = 8MHz :
+  // - RCC_PLL_MUL16 => f_HCLK = 128 MHz => f_PC14 = not tested but expected to be about 32.78 MHz
+  // With HSE = 16MHz :
+  // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 36.2 MHz (stable) => MAXIMUM STABLE FREQUENCY
+  // - RCC_PLL_MUL10 => f_HCLK = 160 MHz => f_PC14 = 40 MHz (unstable: stops in less than 1 second after startup)
+
+  init_v3();
 
   while (1)
   {
-    toggle_v2();
-
-    // Frequency of the square wave generated on PC14 using toggle_v1():
-    // With HSE = 8MHz :
-    // - RCC_PLL_MUL9 => f_HCLK = 72 MHz => f_PC14 = 5.15 MHz (stable)
-    // - RCC_PLL_MUL10 => f_HCLK = 80 MHz => f_PC14 = 5.75 MHz (stable)
-    // - RCC_PLL_MUL11 => f_HCLK = 88 MHz => f_PC14 = 6.25 MHz (stable)
-    // - RCC_PLL_MUL12 => f_HCLK = 96 MHz => f_PC14 = 6.85 MHz (stable)
-    // - RCC_PLL_MUL13 => f_HCLK = 104 MHz => f_PC14 = 7.4 MHz (stable)
-    // - RCC_PLL_MUL14 => f_HCLK = 112 MHz => f_PC14 = 8.0 MHz (stable)
-    // - RCC_PLL_MUL15 => f_HCLK = 120 MHz => f_PC14 = 8.5 MHz (stable)
-    // - RCC_PLL_MUL16 => f_HCLK = 128 MHz => f_PC14 = 9.1 MHz (stable)
-    // With HSE = 16MHz :
-    // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 10.3 MHz (stable) => MAXIMUM STABLE FREQUENCY
-    // - RCC_PLL_MUL10 => f_HCLK = 160 MHz => f_PC14 = 11.5 MHz (unstable: stops about 20 seconds after startup)
-
-    // Frequency of the square wave generated on PC14 using toggle_v2():
-    // With HSE = 8MHz :
-    // - RCC_PLL_MUL16 => f_HCLK = 128 MHz => f_PC14 = 10.6 MHz (stable)
-    // With HSE = 16MHz :
-    // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 12.0 MHz (stable) => MAXIMUM STABLE FREQUENCY
-    // - RCC_PLL_MUL10 => f_HCLK = 160 MHz => f_PC14 = 13.3 MHz (unstable: stops about 20 seconds after startup)
-
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
+    toggle_v3();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
