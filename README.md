@@ -81,15 +81,39 @@ By setting the clock to 128 MHz, the output pulse frequency on PC14 reaches abou
 
 128 MHz was the highest clock frequency achievable with an 8 MHz crystal. Therefore, we change the external crystal to 16 MHz so that we can reach higher clock frequencies.
 
+![IMG_20231001_195405](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/33f3ca02-53d7-43d8-b7e8-4d9710d3b592)
+
 Now we set the clock frequency to 144 MHz. In this case, the output pulse frequency on PC14 reaches about 10.3 MHz:
+
 ![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/58dff154-c042-475d-a193-3547b6c880b5)
 
-The frequency of 10.3 MHz is the highest frequency that the output remains stable for at least 30 minutes.
-
-## Solution 2
+**The frequency of 10.3 MHz is the highest frequency that the output remains stable for at least 10 minutes.**
 
 Now we set the clock frequency to 160 MHz. In this case, the output pulse frequency on PC14 reaches about 11.5 MHz, but after about 20 seconds, it becomes unstable and the output is cut off.
 
 ![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/4c23c660-227e-40a5-a059-5ee8ab06594d)
 
 From now on, by increasing the clock frequency, we do not see any pulses in the output of PC14, which indicates that the microcontroller is hanging and it is not possible to increase its working frequency anymore.
+
+## Solution 2
+
+By changing the code and using the `EORS` instruction instead of `EOR`, the output frequency increased slightly. The results are as follows:
+
+```c
+asm volatile(
+  "eors r1, r2\n"  // XOR the last value of GPIOC_ODR (r1) with the mask (r2)
+  "str r1, [r0]\n" // Store the new value (r1) back to the address of GPIOC_ODR
+);
+```
+
+External crystal = 8 MHz, system clock = 128 MHz, output frequency on PC14 = 10.64 MHz stable:
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/896e1fd8-91a3-48c1-ac06-57b7887ba799)
+
+**External crystal = 16 MHz, system clock = 144 MHz, output frequency  on PC14 = 12.05 MHz stable:**
+
+![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/6fffa32e-d92c-4eac-a8f7-8cba81678187)
+
+External crystal = 16 MHz, system clock = 160 MHz, output frequency on PC14 = 13.33 MHz Unstable (lasts only about 20 seconds):
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/6384566f-a16d-43df-b01d-5dd7a625acd3)
