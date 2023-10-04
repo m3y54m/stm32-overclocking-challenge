@@ -395,7 +395,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : PC14 */
   GPIO_InitStruct.Pin = GPIO_PIN_14;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configures the port and pin on which the EVENTOUT Cortex signal will be connected */
