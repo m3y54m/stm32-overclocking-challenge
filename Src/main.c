@@ -189,11 +189,11 @@ int main(void)
   // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 36.2 MHz (stable) => MAXIMUM STABLE FREQUENCY
   // - RCC_PLL_MUL10 => f_HCLK = 160 MHz => f_PC14 = 40 MHz (unstable: stops in less than 1 second after startup)
 
-  // Frequency of the square wave generated on PC14 using multiple consecutive toggle_v3()'s:
+  // Frequency of the square wave generated on PC14 using multiple consecutive toggle_v4()'s:
   // With HSE = 8MHz :
   // - RCC_PLL_MUL16 => f_HCLK = 128 MHz => f_PC14 = 64.10 MHz (stable)
   // With HSE = 16MHz :
-  // - RCC_PLL_MUL8 => f_HCLK = 144 MHz => f_PC14 = 64.10 MHz (stable)
+  // - RCC_PLL_MUL8 => f_HCLK = 128 MHz => f_PC14 = 64.10 MHz (stable)
   // - RCC_PLL_MUL9 => f_HCLK = 144 MHz => f_PC14 = 72.46 MHz (stable) => MAXIMUM STABLE FREQUENCY
 
   while (1)
@@ -357,7 +357,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -386,6 +386,8 @@ void SystemClock_Config(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -404,6 +406,8 @@ static void MX_GPIO_Init(void)
   /*Enables the Event Output */
   HAL_GPIOEx_EnableEventout();
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
