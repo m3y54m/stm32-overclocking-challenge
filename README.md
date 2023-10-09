@@ -6,7 +6,7 @@ This repository contains my solutions to [a challenge on Sisoog website](https:/
 
 **Write a program for the STM32F103C8T6 microcontroller to toggle the PC14 pin at the highest possible frequency.**
 
-![pc14](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/164b9463-871c-4aa6-9023-f01f0d98a446)
+![272326556-164b9463-871c-4aa6-9023-f01f0d98a446](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/114b060f-806e-4e4a-8941-5108e9b533d2)
 
 The program should meet the following criteria:
 
@@ -20,7 +20,7 @@ We start the process of overclocking the STM32F103C8T8 microcontroller with an e
 
 We set the PC14 pin as a Push-Pull output without Pull-Up and connect it to the oscilloscope to see the output pulse frequency.
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/e9cd48f6-4b72-4660-af47-110bf5e82bf9)
+![272318635-e9cd48f6-4b72-4660-af47-110bf5e82bf9](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/3f35106d-5dea-48ea-bd1c-421198756413)
 
 We write the program in such a way that the toggling of PC14 pin is done as quickly as possible. That's why we do it with assembly instructions.
 
@@ -47,51 +47,51 @@ In this way, in the shortest possible time, the PC14 pin is toggled in the while
 
 By setting the clock to 72 MHz, the output pulse frequency on PC14 reaches about 5.13 MHz:
 
-![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/3f8946e6-e471-4bcd-942c-365c4f05b9d1)
+![272320556-3f8946e6-e471-4bcd-942c-365c4f05b9d1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/62400552-84ea-4607-bd5f-a85c4bef8942)
 
 Now we step by step increase the clock of the microcontroller, until it eventually reaches a point where the output signal on PC14 becomes unstable.
 
 When the clock is set to 80 MHz, the frequency of the output pulse on PC14 reaches approximately 5.71 MHz:
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/5b7ed9fc-c93c-4111-9049-84f94bee5608)
+![272322727-5b7ed9fc-c93c-4111-9049-84f94bee5608](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/2df68053-819c-41ec-b37c-f6608e9e642a)
 
-Setting the clock to 88 MHz, the output pulse frequency on PC14 reaches about 6.25 MHz:
+Setting the clock to 88 MHz, the output pulse frequency on PC14 reaches about 6.29 MHz:
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/467b4e38-9a2f-4574-8eb9-4f4194cc15c5)
+![272323179-467b4e38-9a2f-4574-8eb9-4f4194cc15c5](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/307e6bf3-32f3-4990-ba30-f8877ef58a9d)
 
-By setting the clock to 96 MHz, the output pulse frequency on PC14 reaches about 6.85 MHz:
+By setting the clock to 96 MHz, the output pulse frequency on PC14 reaches about 6.94 MHz:
 
-![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/91792af6-8377-4fcd-adf8-3c8715c8dfa8)
+![272323240-91792af6-8377-4fcd-adf8-3c8715c8dfa8](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/44e07946-1b4a-4a1f-9a9d-bd6e92e5d88b)
 
-By setting the clock to 104 MHz, the output pulse frequency on PC14 reaches about 7.4 MHz:
+By setting the clock to 104 MHz, the output pulse frequency on PC14 reaches about 7.46 MHz:
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/172efa03-de96-4679-b139-10cb421c8ed8)
+![272323358-172efa03-de96-4679-b139-10cb421c8ed8](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/9e2c803b-ebb7-4e1e-9721-7d95e578afe0)
 
 By setting the clock to 112 MHz, the output pulse frequency on PC14 reaches about 8.0 MHz:
 
-![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/cb7b5caf-7e21-4bfa-a6c6-c5d41f34b8a6)
+![272323415-cb7b5caf-7e21-4bfa-a6c6-c5d41f34b8a6](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/e1c393f3-48c4-49eb-a879-10d8ab1752ae)
 
-By setting the clock to 120 MHz, the output pulse frequency on PC14 reaches about 8.5 MHz:
+By setting the clock to 120 MHz, the output pulse frequency on PC14 reaches about 8.62 MHz:
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/e707a410-fef1-4941-82ba-628c6b53bb7d)
+![272323439-e707a410-fef1-4941-82ba-628c6b53bb7d](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/0db70d6a-492f-46de-bb2f-99d3d9083682)
 
-By setting the clock to 128 MHz, the output pulse frequency on PC14 reaches about 9.1 MHz:
+By setting the clock to 128 MHz, the output pulse frequency on PC14 reaches about 9.17 MHz:
 
-![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/d005036b-e9ed-40c7-8c18-ef32f3d984f1)
+![272323488-d005036b-e9ed-40c7-8c18-ef32f3d984f1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/b52199f7-8174-4603-ac12-4aeb6e2ed4ac)
 
 128 MHz was the highest clock frequency achievable with an 8 MHz crystal. Therefore, we change the external crystal to 16 MHz so that we can reach higher clock frequencies.
 
-![IMG_20231001_195405](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/33f3ca02-53d7-43d8-b7e8-4d9710d3b592)
+![272330538-33f3ca02-53d7-43d8-b7e8-4d9710d3b592](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/e4244b24-531a-4b03-af12-02b64dca1da4)
 
-Now we set the clock frequency to 144 MHz. In this case, the output pulse frequency on PC14 reaches about 10.3 MHz:
+Now we set the clock frequency to 144 MHz. In this case, the output pulse frequency on PC14 reaches about 10.25 MHz:
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/58dff154-c042-475d-a193-3547b6c880b5)
+![272323571-58dff154-c042-475d-a193-3547b6c880b5](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/72a911da-384e-4c9d-b1a6-83e317b1e375)
 
 **The frequency of 10.3 MHz is the highest frequency that the output remains stable for at least 10 minutes.**
 
-Now we set the clock frequency to 160 MHz. In this case, the output pulse frequency on PC14 reaches about 11.5 MHz, but after about 20 seconds, it becomes unstable and the output is cut off.
+Now we set the clock frequency to 160 MHz. In this case, the output pulse frequency on PC14 reaches about 11.47 MHz, but after about 20 seconds, it becomes unstable and the output is cut off.
 
-![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/4c23c660-227e-40a5-a059-5ee8ab06594d)
+![272323640-4c23c660-227e-40a5-a059-5ee8ab06594d](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/48bf6bc8-f718-4b5e-ae8e-dda39a5a48d1)
 
 From now on, by increasing the clock frequency, we do not see any pulses in the output of PC14, which indicates that the microcontroller is hanging and it is not possible to increase its working frequency anymore.
 
@@ -108,15 +108,15 @@ asm volatile(
 
 External crystal = 8 MHz, system clock = 128 MHz, output frequency on PC14 = 10.64 MHz stable:
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/896e1fd8-91a3-48c1-ac06-57b7887ba799)
+![272329966-896e1fd8-91a3-48c1-ac06-57b7887ba799](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/7d2e6f3a-1edb-49e7-9e91-783e2df91d13)
 
 **External crystal = 16 MHz, system clock = 144 MHz, output frequency  on PC14 = 12.05 MHz stable:**
 
-![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/6fffa32e-d92c-4eac-a8f7-8cba81678187)
+![272329999-6fffa32e-d92c-4eac-a8f7-8cba81678187](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/f8e5ef80-3ae1-418a-a2d7-cb62ceb9c5d9)
 
 External crystal = 16 MHz, system clock = 160 MHz, output frequency on PC14 = 13.33 MHz Unstable (lasts only about 20 seconds):
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/6384566f-a16d-43df-b01d-5dd7a625acd3)
+![272330094-6384566f-a16d-43df-b01d-5dd7a625acd3](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/09b97209-4b9e-47d0-a1b5-fe13cc5c4b4b)
 
 ## Solution 3
 
@@ -141,25 +141,25 @@ asm volatile(
 
 Now, with an external crystal of 16 MHz and setting the clock to 144 MHz, a frequency of 20.66 MHz can be reached on PC14:
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/7472b35f-3f81-4bf9-8d92-e28eec869349)
+![272334031-7472b35f-3f81-4bf9-8d92-e28eec869349](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/a7130412-674d-4416-a69b-e7f3d41b7f2c)
 
 The branch instruction `b` executed at the end of each while loop, reduces the frequency of output pulse on PC14;
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/4bdf354d-4d27-4ff4-b20d-91210b51f5e8)
+![272334330-4bdf354d-4d27-4ff4-b20d-91210b51f5e8](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/40d0be88-ea62-4408-bf10-95fc0a7abcef)
 
 To solve this problem, we toggle PC14 multiple times and sequentially in each execution of the loop:
 
-![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/a43d2e2e-fb9f-4e71-b1c0-dcd5944fdd60)
+![272334366-a43d2e2e-fb9f-4e71-b1c0-dcd5944fdd60](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/d79b0e2c-738a-4284-bb77-8344dcff051c)
 
 **By removing the delay caused by the branch, we were able to reach a frequency of 36.23 MHz on PC14 with an external crystal of 16 MHz and setting the clock to 144 MHz:**
 
-![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/d7bea841-1a9d-40dc-a2cc-a9fab940eaa7)
+![272334416-d7bea841-1a9d-40dc-a2cc-a9fab940eaa7](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/4515991b-693d-4afe-808f-9d6b8d0f30ad)
 
 ## Solution 4
 
 The EVENTOUT function on PC14 pin can be used to achieve higher frequency. After enabling the EVENTOUT function, the value of PC14 can be set to `1` only for one clock cycle using the `SEV` instruction. In this way, half of a full pulse is created. Now, with the help of the `NOP` instruction, we create a delay for one clock cycle in the state where the value of PC14 is `0`, so that a complete pulse is created.
 
-![Screenshot_10](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/35acc2ad-6d8f-4805-8509-ccb1999204ec)
+![272402690-35acc2ad-6d8f-4805-8509-ccb1999204ec](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/38ea0aa9-a1f4-4417-a8c6-ca6d427d19c0)
 
 ```c
 asm volatile(
@@ -172,12 +172,13 @@ Similar to solution 3, it is possible to eliminate the delay caused by branch in
 
 External crystal = 8 MHz, system clock 128 MHz, output signal frequency = 64.10 MHz:
 
-![128MHz_v4_8M](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/a064a292-957b-4ec5-9bb9-a1f6d6c7f3df)
+![272402498-a064a292-957b-4ec5-9bb9-a1f6d6c7f3df](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/60c68545-a74e-44cc-8256-ebd9f27a4cae)
 
 External crystal = 16 MHz, system clock 128 MHz, output signal frequency = 64.10 MHz:
 
-![128MHz_v4_16M](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/352d359a-ea74-4bd3-ac1b-2fcbf6f8c437)
+![272402476-352d359a-ea74-4bd3-ac1b-2fcbf6f8c437](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/84cadb04-b9c8-4d6d-987e-d7b18fc661fb)
 
 **External crystal = 16 MHz, system clock 144 MHz, output signal frequency = 72.46 MHz (highest stable frequency):**
 
-![144MHz_v4_16M](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/ce426b2e-4062-42c0-b00f-563a52a3fde5)
+![272402450-ce426b2e-4062-42c0-b00f-563a52a3fde5](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/8b4a3e0d-d961-45d7-acbd-53138cac5fb3)
+
