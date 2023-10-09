@@ -212,6 +212,7 @@ Signal obtained on PC14 with 16 MHz crystal and 144 MHz clock: (72.46 MHz - the 
 
 ## Resources
 
+- [Getting Started with STM32 Programming](https://github.com/m3y54m/start-stm32)
 - [STM32F103C8 Datasheet](https://www.st.com/resource/en/datasheet/stm32f103c8.pdf)
 - [RM0008 STM32F101xx, STM32F102xx, STM32F103xx, STM32F105xx and STM32F107xx advanced Arm®-based 32-bit MCUs](https://www.st.com/resource/en/reference_manual/rm0008-stm32f101xx-stm32f102xx-stm32f103xx-stm32f105xx-and-stm32f107xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
 - [PM0056 STM32F10xxx/20xxx/21xxx/L1xxxx Cortex®-M3 programming manual](https://www.st.com/resource/en/programming_manual/pm0056-stm32f10xxx20xxx21xxxl1xxxx-cortexm3-programming-manual-stmicroelectronics.pdf)
