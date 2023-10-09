@@ -14,6 +14,8 @@ The program should meet the following criteria:
 - The generated signal on PC14 should maintain the same frequency for a minimum of 10 minutes.
 - It is recommended to use a [Blue-Pill board](https://stm32world.com/wiki/Blue_Pill) as the hardware for this challenge. If required, you are allowed to replace the crystal on the board.
 
+**⚠️ Disclaimer:** Overclocking may cause the microcontroller to overheat and result in damage. Therefore, please exercise caution and use this code **at your own risk**.
+
 ## Solution 1
 
 We start the process of overclocking the STM32F103C8T8 microcontroller with an external crystal of 8 MHz and setting the clock speed to 72 MHz.
