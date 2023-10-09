@@ -182,3 +182,28 @@ External crystal = 16 MHz, system clock 128 MHz, output signal frequency = 64.10
 
 ![272402450-ce426b2e-4062-42c0-b00f-563a52a3fde5](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/8b4a3e0d-d961-45d7-acbd-53138cac5fb3)
 
+As you can see, the quality and amplitude of the output signal is still not very good. To increase the quality of the output signal, it is necessary increase clock frequencies of all involving microcontroller units to their highest level. For this purpose, changes were made in the code as follows:
+
+PC14 settings:
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/1eb071be-841b-44ee-aa2b-c2c2ce9b21cd)
+
+Clock settings for 8 MHz crystal:
+
+![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/caee2f97-344f-465b-a6d7-da275c71af08)
+
+Signal obtained on PC14 with 8 MHz crystal and 128 MHz clock: (64.10 MHz)
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/e179a95a-af53-47c1-96e7-9c9ea371b33e)
+
+Clock settings for 16 MHz crystal:
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/2cb0e150-9ed6-4296-a320-d89630e42426)
+
+Signal obtained on PC14 with 16 MHz crystal and 128 MHz clock: (64.10 MHz)
+
+![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/51a2d62a-ca19-470b-b798-dce6af37a18b)
+
+Signal obtained on PC14 with 16 MHz crystal and 144 MHz clock: (72.46 MHz - the highest stable frequency achievable)
+
+![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/607a5964-7e10-4dce-8cd0-19321258c102)
