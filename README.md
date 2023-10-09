@@ -136,8 +136,8 @@ Inside the while loop, we use two `STR` commands to set PC14 to zero and one.
 
 ```c
 asm volatile(
-  "str r2, [r0]\n" // Store value of r1 (PC14 = 0) to the address of GPIOC_ODR
-  "str r1, [r0]\n" // Store value of r2 (PC14 = 1) to the address of GPIOC_ODR
+  "str r2, [r0]\n" // Store value of r2 (PC14 = 1) to the address of GPIOC_ODR
+  "str r1, [r0]\n" // Store value of r1 (PC14 = 0) to the address of GPIOC_ODR
 );
 ```
 
