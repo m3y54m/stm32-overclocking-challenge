@@ -28,13 +28,17 @@ The challenge statement forces us to generate the output signal using only PC14.
 
 We start the process of overclocking the STM32F103C8T8 microcontroller with an external crystal of 8 MHz and setting the clock speed to 72 MHz.
 
+![image](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/f0a820c3-2395-46ac-b918-b859f24ebb72)
+
 We set the PC14 pin as a Push-Pull output without Pull-Up and connect it to the oscilloscope to see the output pulse frequency.
+
+![image](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/d6454220-fd6c-4657-be15-5e7ad93566f2)
 
 ![272318635-e9cd48f6-4b72-4660-af47-110bf5e82bf9](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/3f35106d-5dea-48ea-bd1c-421198756413)
 
-We write the program in such a way that the toggling of PC14 pin is done as quickly as possible. That's why we do it with assembly instructions.
+We write the program in such a way that the toggling of PC14 pin is done as quickly as possible. That's why we are using assembly instructions.
 
-The fastest way to toggle a bit in a register is to use the XOR command. For this reason, before the while loop, we store the address of the `GPIOC_ODR` register and the mask needed to change the value of bit 14 of the PORTC in the general-purpose registers:
+The fastest way to toggle a bit in a register is to use the XOR operation. So, before the `while` loop, we store the address of the `GPIOC_ODR` register and the mask needed to change the value of 14th bit of the PORTC in the general-purpose registers:
 
 ```c
 asm volatile(
@@ -44,7 +48,13 @@ asm volatile(
 );
 ```
 
-Then, inside the while loop, we first perform the XOR operation between the mask and the current value of the GPIOC_ODR register with the help of the `EOR` instruction, and then rewrite the resulting value in the `GPIOC_ODR` register with the `STR` instruction:
+The address of `GPIOC_ODR` is adopted from the [RM0008](https://www.st.com/resource/en/reference_manual/rm0008-stm32f101xx-stm32f102xx-stm32f103xx-stm32f105xx-and-stm32f107xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf) document.
+
+![image](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/0ebdd1aa-217a-4f8e-ae39-459fe5603a0e)
+
+![image](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/498ad55a-3047-4a6e-88ab-1a1350781670)
+
+Then, inside the `while` loop, we first perform the XOR operation between the mask and the current value of the GPIOC_ODR register with the help of the `EOR` instruction, and then rewrite the resulting value in the `GPIOC_ODR` register with the `STR` instruction:
 
 ```c
 asm volatile(
@@ -53,7 +63,7 @@ asm volatile(
 );
 ```
 
-In this way, in the shortest possible time, the PC14 pin is toggled in the while loop, and the highest output pulse frequency will be obtained.
+In this way, in the shortest possible time, the PC14 pin is toggled in the `while` loop, and the highest output pulse frequency will be obtained.
 
 By setting the clock to 72 MHz, the output pulse frequency on PC14 reaches about 5.13 MHz:
 
@@ -130,7 +140,7 @@ External crystal = 16 MHz, system clock = 160 MHz, output frequency on PC14 = 13
 
 ### Solution 3
 
-To increase the pulse frequency, before entering the while loop, the corresponding values of GPIOC_ODR for setting the PC14 pin to zero and one were stored in two genral-purpose registers r1 and r2:
+To increase the pulse frequency, before entering the `while` loop, the corresponding values of GPIOC_ODR for setting the PC14 pin to zero and one were stored in two genral-purpose registers r1 and r2:
 
 ```c
 asm volatile(
@@ -140,7 +150,7 @@ asm volatile(
 );
 ```
 
-Inside the while loop, we use two `STR` commands to set PC14 to zero and one.
+Inside the `while` loop, we use two `STR` commands to set PC14 to zero and one.
 
 ```c
 asm volatile(
@@ -153,7 +163,7 @@ Now, with an external crystal of 16 MHz and setting the clock to 144 MHz, a freq
 
 ![272334031-7472b35f-3f81-4bf9-8d92-e28eec869349](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/a7130412-674d-4416-a69b-e7f3d41b7f2c)
 
-The branch instruction `b` executed at the end of each while loop, reduces the frequency of output pulse on PC14;
+The branch instruction `b` executed at the end of each `while` loop, reduces the frequency of output pulse on PC14;
 
 ![272334330-4bdf354d-4d27-4ff4-b20d-91210b51f5e8](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/40d0be88-ea62-4408-bf10-95fc0a7abcef)
 
@@ -178,7 +188,7 @@ asm volatile(
 );
 ```
 
-Similar to solution 3, it is possible to eliminate the delay caused by branch instruction `b` in the generated signal by sequentially executing `SEV` and `NOP` inside the while loop. The results of this program are as follows:
+Similar to solution 3, it is possible to eliminate the delay caused by branch instruction `b` in the generated signal by sequentially executing `SEV` and `NOP` inside the `while` loop. The results of this program are as follows:
 
 External crystal = 8 MHz, system clock 128 MHz, output signal frequency = 64.10 MHz:
 
