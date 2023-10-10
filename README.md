@@ -16,7 +16,15 @@ The program should meet the following criteria:
 - The generated signal on PC14 should maintain the same frequency for a minimum of 10 minutes.
 - It is recommended to use a [Blue-Pill board](https://stm32world.com/wiki/Blue_Pill) as the hardware for this challenge. If required, you are allowed to replace the crystal on the board.
 
-## Solution 1
+## My Solutions
+
+The challenge statement forces us to generate the output signal using only PC14. This is because PC14 cannot be used as the MCO, PWM, or timer outputs, so we need to find alternative methods to create a high-frequency pulse on PC14.
+
+![image](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/05ac6b93-2cb2-453f-8a15-fe77cf780374)
+
+![image](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/6b9128d0-1c74-4d3f-a261-b26cebb90b91)
+
+### Solution 1
 
 We start the process of overclocking the STM32F103C8T8 microcontroller with an external crystal of 8 MHz and setting the clock speed to 72 MHz.
 
@@ -97,7 +105,7 @@ Now we set the clock frequency to 160 MHz. In this case, the output pulse freque
 
 From now on, by increasing the clock frequency, we do not see any pulses in the output of PC14, which indicates that the microcontroller is hanging and it is not possible to increase its working frequency anymore.
 
-## Solution 2
+### Solution 2
 
 By changing the code and using the `EORS` instruction instead of `EOR`, the output frequency increased slightly. The results are as follows:
 
@@ -120,7 +128,7 @@ External crystal = 16 MHz, system clock = 160 MHz, output frequency on PC14 = 13
 
 ![272330094-6384566f-a16d-43df-b01d-5dd7a625acd3](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/09b97209-4b9e-47d0-a1b5-fe13cc5c4b4b)
 
-## Solution 3
+### Solution 3
 
 To increase the pulse frequency, before entering the while loop, the corresponding values of GPIOC_ODR for setting the PC14 pin to zero and one were stored in two genral-purpose registers r1 and r2:
 
@@ -157,7 +165,7 @@ To solve this problem, we toggle PC14 multiple times and sequentially in each ex
 
 ![272334416-d7bea841-1a9d-40dc-a2cc-a9fab940eaa7](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/4515991b-693d-4afe-808f-9d6b8d0f30ad)
 
-## Solution 4
+### Solution 4
 
 The EVENTOUT function on PC14 pin can be used to achieve higher frequency. After enabling the EVENTOUT function, the value of PC14 can be set to `1` only for one clock cycle using the `SEV` instruction. In this way, half of a full pulse is created. Now, with the help of the `NOP` instruction, we create a delay for one clock cycle in the state where the value of PC14 is `0`, so that a complete pulse is created.
 
