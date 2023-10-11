@@ -243,6 +243,8 @@ __attribute__((section(".data"))) inline void toggle_v5(void)
 }
 ```
 
+![dso_01_01_02_23_55](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/ce59d395-ef07-4bf8-88d2-3a6318bacd78)
+
 ## Resources
 
 - [Getting Started with STM32 Programming](https://github.com/m3y54m/start-stm32)
@@ -250,3 +252,4 @@ __attribute__((section(".data"))) inline void toggle_v5(void)
 - [RM0008 STM32F101xx, STM32F102xx, STM32F103xx, STM32F105xx and STM32F107xx advanced Arm®-based 32-bit MCUs](https://www.st.com/resource/en/reference_manual/rm0008-stm32f101xx-stm32f102xx-stm32f103xx-stm32f105xx-and-stm32f107xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
 - [PM0056 STM32F10xxx/20xxx/21xxx/L1xxxx Cortex®-M3 programming manual](https://www.st.com/resource/en/programming_manual/pm0056-stm32f10xxx20xxx21xxxl1xxxx-cortexm3-programming-manual-stmicroelectronics.pdf)
 - [STM32H7 (Cortex-M7) GPIO toggling](https://metebalci.com/blog/stm32h7-gpio-toggling/)
+- [Executing code from RAM on STM32 ARM Microcontrollers ](https://dev.to/rajeevbharol/executing-code-from-ram-on-stm32-arm-microcontrollers-2k2l)
