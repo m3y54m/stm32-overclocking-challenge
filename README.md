@@ -230,7 +230,9 @@ Signal obtained on PC14 with 16 MHz crystal and `SYSCLK = 144 MHz`: (**72.46 MHz
 
 ### Solution 5
 
-I tried to store the whole program or some parts of it in SRAM in order to prevent microcontroller from hanging in higher clock frequencies. The results after storing the whole program in SRAM was not successful, but storing the `toggle_v5()` in SRAM caused to get a stable signal with the frequency of **80.00 MHz** while `SYSCLK = 160 MHz`. I myself cannot explain why, but it works anyway!
+I tried to store the whole program or some parts of it in SRAM in order to prevent microcontroller from hanging in higher clock frequencies. The results after storing the whole program in SRAM was not successful, but storing the `toggle_v5()` in SRAM caused to get a stable signal with the frequency of **80.00 MHz** while `SYSCLK = 160 MHz`.
+
+I cannot explain why, but it works anyway!
 
 ```c
 __attribute__((section(".data"))) inline void toggle_v5(void)
