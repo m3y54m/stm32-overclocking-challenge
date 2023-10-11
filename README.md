@@ -228,6 +228,21 @@ Signal obtained on PC14 with 16 MHz crystal and `SYSCLK = 144 MHz`: (**72.46 MHz
 
 ![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/607a5964-7e10-4dce-8cd0-19321258c102)
 
+### Solution 5
+
+I tried to store the whole program or some parts of it in SRAM in order to prevent microcontroller from hanging in higher clock frequencies. The results after storing the whole program in SRAM was not successful, but storing the `toggle_v5()` in SRAM caused to get a stable signal with the frequency of **80.00 MHz** while `SYSCLK = 160 MHz`. I myself cannot explain why, but it works anyway!
+
+```c
+__attribute__((section(".data"))) inline void toggle_v5(void)
+{
+  // Toggle PC14 using EVENTOUT function
+  asm volatile(
+      "sev\n" // Set EVENTOUT pin (PC14) for one clock cycle (and then reset it) => PC14 = 1
+      "nop\n" // Wait for one clock cycle and do nothing (while EVENTOUT is reset) => PC14 = 0
+  );
+}
+```
+
 ## Resources
 
 - [Getting Started with STM32 Programming](https://github.com/m3y54m/start-stm32)
