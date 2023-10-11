@@ -103,13 +103,13 @@ For `SYSCLK = 128 MHz`, the output pulse frequency on PC14 reaches about **9.17 
 
 ![272330538-33f3ca02-53d7-43d8-b7e8-4d9710d3b592](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/e4244b24-531a-4b03-af12-02b64dca1da4)
 
-After configuring the project for `SYSCLK = 144 MHz`, the output pulse frequency on PC14 increases to approximately *10.25 MHz**.
+After configuring the project for `SYSCLK = 144 MHz`, the output pulse frequency on PC14 increases to approximately **10.25 MHz**.
 
 ![272323571-58dff154-c042-475d-a193-3547b6c880b5](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/72a911da-384e-4c9d-b1a6-83e317b1e375)
 
 **The frequency of 10.25 MHz is the highest frequency that the output remains stable for at least 10 minutes.**
 
-Now we configure the project for `SYSCLK = 160 MHz`. In this case, the output pulse frequency on PC14 reaches about 11.47 MHz, but after about 20 seconds, it becomes unstable and the output is cut off.
+Now we configure the project for `SYSCLK = 160 MHz`. In this case, the output pulse frequency on PC14 reaches about *11.47 MHz*, but after about 20 seconds, it becomes unstable and the output is cut off.
 
 ![272323640-4c23c660-227e-40a5-a059-5ee8ab06594d](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/48bf6bc8-f718-4b5e-ae8e-dda39a5a48d1)
 
@@ -126,7 +126,7 @@ asm volatile(
 );
 ```
 
-External crystal = 8 MHz, `SYSCLK = 128 MHz`, output frequency on PC14 = 10.64 MHz stable:
+External crystal = 8 MHz, `SYSCLK = 128 MHz`, output frequency on PC14 = **10.64 MHz** stable:
 
 ![272329966-896e1fd8-91a3-48c1-ac06-57b7887ba799](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/7d2e6f3a-1edb-49e7-9e91-783e2df91d13)
 
@@ -134,7 +134,7 @@ External crystal = 8 MHz, `SYSCLK = 128 MHz`, output frequency on PC14 = 10.64 M
 
 ![272329999-6fffa32e-d92c-4eac-a8f7-8cba81678187](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/f8e5ef80-3ae1-418a-a2d7-cb62ceb9c5d9)
 
-External crystal = 16 MHz, `SYSCLK = 160 MHz`, output frequency on PC14 = 13.33 MHz Unstable (lasts only about 20 seconds):
+External crystal = 16 MHz, `SYSCLK = 160 MHz`, output frequency on PC14 = *13.33 MHz* Unstable (lasts only about 20 seconds):
 
 ![272330094-6384566f-a16d-43df-b01d-5dd7a625acd3](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/09b97209-4b9e-47d0-a1b5-fe13cc5c4b4b)
 
@@ -159,7 +159,7 @@ asm volatile(
 );
 ```
 
-Now, with an external crystal of 16 MHz and `SYSCLK = 144 MHz`, a frequency of 20.66 MHz can be reached on PC14:
+Now, with an external crystal of 16 MHz and `SYSCLK = 144 MHz`, a frequency of **20.66 MHz** can be reached on PC14:
 
 ![272334031-7472b35f-3f81-4bf9-8d92-e28eec869349](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/a7130412-674d-4416-a69b-e7f3d41b7f2c)
 
@@ -190,11 +190,11 @@ asm volatile(
 
 Similar to solution 3, it is possible to eliminate the delay caused by branch instruction `b` in the generated signal by sequentially executing `SEV` and `NOP` inside the `while` loop. The results of this program are as follows:
 
-External crystal = 8 MHz, `SYSCLK = 128 MHz`, output signal frequency = 64.10 MHz:
+External crystal = 8 MHz, `SYSCLK = 128 MHz`, output signal frequency = **64.10 MHz**:
 
 ![272402498-a064a292-957b-4ec5-9bb9-a1f6d6c7f3df](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/60c68545-a74e-44cc-8256-ebd9f27a4cae)
 
-External crystal = 16 MHz, `SYSCLK = 128 MHz`, output signal frequency = 64.10 MHz:
+External crystal = 16 MHz, `SYSCLK = 128 MHz`, output signal frequency = **64.10 MHz**:
 
 ![272402476-352d359a-ea74-4bd3-ac1b-2fcbf6f8c437](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/84cadb04-b9c8-4d6d-987e-d7b18fc661fb)
 
@@ -212,7 +212,7 @@ Clock settings for 8 MHz crystal:
 
 ![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/caee2f97-344f-465b-a6d7-da275c71af08)
 
-Signal obtained on PC14 with 8 MHz crystal and `SYSCLK = 128 MHz`: (64.10 MHz)
+Signal obtained on PC14 with 8 MHz crystal and `SYSCLK = 128 MHz`: (**64.10 MHz**)
 
 ![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/e179a95a-af53-47c1-96e7-9c9ea371b33e)
 
@@ -220,11 +220,11 @@ Clock settings for 16 MHz crystal:
 
 ![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/2cb0e150-9ed6-4296-a320-d89630e42426)
 
-Signal obtained on PC14 with 16 MHz crystal and `SYSCLK = 128 MHz`: (64.10 MHz)
+Signal obtained on PC14 with 16 MHz crystal and `SYSCLK = 128 MHz`: (**64.10 MHz**)
 
 ![unnamed](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/51a2d62a-ca19-470b-b798-dce6af37a18b)
 
-Signal obtained on PC14 with 16 MHz crystal and `SYSCLK = 144 MHz`: (72.46 MHz - the highest stable frequency achievable)
+Signal obtained on PC14 with 16 MHz crystal and `SYSCLK = 144 MHz`: (**72.46 MHz - the highest stable frequency achievable**)
 
 ![unnamed-1](https://github.com/m3y54m/stm32-overclocking-challenge/assets/1549028/607a5964-7e10-4dce-8cd0-19321258c102)
 
