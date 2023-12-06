@@ -2,7 +2,8 @@
 
 This repository contains my solutions to [a challenge on Sisoog website](https://sisoog.com/2023/09/28/%d9%85%d8%b3%d8%a7%d8%a8%d9%82%d9%87-%d9%87%d9%81%d8%aa%d9%85-%d8%b3%db%8c%d8%b3%d9%88%da%af/).
 
-**⚠️ Disclaimer:** Overclocking may cause the microcontroller to overheat and result in damage. Therefore, please exercise caution and use the material in this repository **AT YOUR OWN RISK! ⚠️**
+> [!CAUTION]
+> Overclocking may cause the microcontroller to overheat and result in damage. Therefore, please exercise caution and only attempt this if you know exactly what you are doing. Use the instructions in this repository ***at your own risk***.
 
 ## Challenge Statement
 
